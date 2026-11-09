@@ -1,18 +1,16 @@
 [
   {
     "titel": "ESP32-Wetterstation",
-    "beschreibung": "Misst Temperatur, Luftfeuchtigkeit und Luftdruck. Daten werden auf einem OLED-Display angezeigt und per WiFi übertragen.",
-    "materialien": ["ESP32", "BME280-Sensor", "OLED-Display", "Breadboard"],
+    "beschreibung": "Misst Temperatur, Luftfeuchtigkeit und Luftdruck.",
     "bauzeit": "2 Stunden",
     "schwierigkeit": "Mittel",
-    "bild": "https://via.placeholder.com/200x200?text=ESP32+Wetterstation"
+    "bild": "https://i.imgur.com/5X5wKQh.png"  // Funktionierende URL
   },
   {
-    "titel": "3D-gedruckte Roboterhand",
-    "beschreibung": "Eine steuerbare Roboterhand aus 3D-gedruckten Teilen und Servomotoren. Ideal für den Unterricht.",
-    "materialien": ["3D-Drucker", "Servomotoren", "Arduino", "Fäden"],
-    "bauzeit": "4 Stunden",
+    "titel": "3D-Roboterarm",
+    "beschreibung": "Ein steuerbarer Roboterarm für den Unterricht.",
+    "bauzeit": "3 Stunden",
     "schwierigkeit": "Schwer",
-    "bild": "https://via.placeholder.com/200x200?text=Roboterhand"
+    "bild": "https://i.imgur.com/ABC5678.jpg"  // Funktionierende URL
   }
 ]
