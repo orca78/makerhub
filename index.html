@@ -46,7 +46,7 @@
     .form-group {
       margin-bottom: 15px;
     }
-    input, textarea, button {
+    input, textarea, select, button {
       width: 100%;
       padding: 10px;
       margin: 5px 0;
@@ -66,30 +66,15 @@
     button:hover {
       background-color: #2980b9;
     }
-    #user-info {
-      background-color: #1e1e1e;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      text-align: right;
-    }
     .project-card {
       margin-bottom: 20px;
-    }
-    .project-images {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 10px 0;
     }
     .project-images img {
       max-height: 200px;
       max-width: 200px;
       border-radius: 5px;
       object-fit: cover;
-    }
-    .hidden {
-      display: none;
+      margin: 10px 0;
     }
   </style>
 </head>
@@ -99,54 +84,95 @@
     <p>Tausche dich mit anderen Lehrkräften aus und teile deine Projekte!</p>
   </header>
   <div class="container">
-    <div id="user-info"></div>
-    <div class="card">
-      <h2>Anmelden</h2>
-      <div class="form-group">
-        <input type="email" id="login-email" placeholder="E-Mail (Demo: test@example.com)">
-      </div>
-      <div class="form-group">
-        <input type="password" id="login-password" placeholder="Passwort (Demo: 123456)">
-      </div>
-      <button onclick="alert('Login-Funktion würde hier mit PocketBase arbeiten.')">Anmelden</button>
-    </div>
-    <div class="card">
-      <h2>Registrieren</h2>
-      <div class="form-group">
-        <input type="email" id="register-email" placeholder="E-Mail">
-      </div>
-      <div class="form-group">
-        <input type="password" id="register-password" placeholder="Passwort">
-      </div>
-      <div class="form-group">
-        <input type="text" id="register-name" placeholder="Name">
-      </div>
-      <button onclick="alert('Registrierungs-Funktion würde hier mit PocketBase arbeiten.')">Registrieren</button>
-    </div>
-    <div class="card">
-      <h2>🌡️ Beispielprojekt: ESP32-Wetterstation</h2>
-      <p><strong>Beschreibung:</strong> Eine Wetterstation mit ESP32, die Temperatur, Luftfeuchtigkeit und Luftdruck misst. Die Daten werden auf einem OLED-Display angezeigt und können per WiFi an eine API gesendet werden.</p>
-      <p><strong>Materialien:</strong> ESP32, BME280-Sensor, OLED-Display, Breadboard, Jumper-Kabel</p>
-      <p><strong>Bauzeit:</strong> ~2 Stunden | <strong>Schwierigkeit:</strong> Mittel</p>
-      <div class="project-images">
-        
-
-![Generated Image](https://via.placeholder.com/200x200?text=ESP32+Wetterstation)
-
-
-      </div>
-      <button onclick="alert('Hier könnten Kommentare und Bewertungen angezeigt werden.')">Kommentare anzeigen</button>
-    </div>
     <div class="card">
       <h2>Neues Projekt erstellen</h2>
       <div class="form-group">
-        <input type="text" id="project-title" placeholder="Titel">
+        <input type="text" id="project-title" placeholder="Titel" required>
       </div>
       <div class="form-group">
-        <textarea id="project-description" placeholder="Beschreibung" rows="4"></textarea>
+        <textarea id="project-description" placeholder="Beschreibung" rows="4" required></textarea>
       </div>
-      <button onclick="alert('Projekt-Erstellungsfunktion würde hier mit PocketBase arbeiten.')">Projekt erstellen</button>
+      <div class="form-group">
+        <input type="text" id="project-bauzeit" placeholder="Bauzeit (z. B. 2 Stunden)">
+      </div>
+      <div class="form-group">
+        <select id="project-schwierigkeit">
+          <option value="Einfach">Einfach</option>
+          <option value="Mittel" selected>Mittel</option>
+          <option value="Schwer">Schwer</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <input type="url" id="project-bild-url" placeholder="Bild-URL (z. B. von Imgur)">
+        <small>Lade dein Bild auf <a href="https://imgur.com/upload" target="_blank">Imgur</a> hoch und füge den Link hier ein.</small>
+      </div>
+      <button onclick="neuesProjektHinzufuegen()">Projekt erstellen</button>
     </div>
+    <div id="projekte-container"></div>
   </div>
-</body>
-</html>
+
+  <script>
+    // Projekte aus der JSON-Datei laden
+    async function ladeProjekte() {
+      try {
+        const response = await fetch('projekte.json');
+        if (!response.ok) throw new Error("projekte.json nicht gefunden");
+        return await response.json();
+      } catch (error) {
+        console.error("Fehler beim Laden der Projekte:", error);
+        // Fallback: Beispielprojekte, falls die JSON-Datei nicht geladen werden kann
+        return [
+          {
+            titel: "ESP32-Wetterstation",
+            beschreibung: "Misst Temperatur, Luftfeuchtigkeit und Luftdruck. Daten werden auf einem OLED-Display angezeigt.",
+            materialien: ["ESP32", "BME280-Sensor"],
+            bauzeit: "2 Stunden",
+            schwierigkeit: "Mittel",
+            bild: "https://via.placeholder.com/200x200?text=ESP32+Wetterstation"
+          }
+        ];
+      }
+    }
+
+    // Projekte auf der Seite anzeigen
+    async function zeigeProjekte() {
+      const projekte = await ladeProjekte();
+      const container = document.getElementById('projekte-container');
+      container.innerHTML = '<h2>📌 Projekte</h2>';
+
+      projekte.forEach(projekt => {
+        const projektCard = document.createElement('div');
+        projektCard.className = 'card project-card';
+        projektCard.innerHTML = `
+          <h3>${projekt.titel}</h3>
+          <p><strong>Beschreibung:</strong> ${projekt.beschreibung}</p>
+          <p><strong>Bauzeit:</strong> ${projekt.bauzeit || "Nicht angegeben"} |
+          <strong>Schwierigkeit:</strong> ${projekt.schwierigkeit || "Nicht angegeben"}</p>
+          
+
+![Generated Image](${projekt.bild}" alt="${projekt.titel})
+
+
+        `;
+        container.appendChild(projektCard);
+      });
+    }
+
+    // Neues Projekt hinzufügen (speichert in localStorage)
+    function neuesProjektHinzufuegen() {
+      const titel = document.getElementById('project-title').value;
+      const beschreibung = document.getElementById('project-description').value;
+      const bauzeit = document.getElementById('project-bauzeit').value;
+      const schwierigkeit = document.getElementById('project-schwierigkeit').value;
+      const bildUrl = document.getElementById('project-bild-url').value || "https://via.placeholder.com/200x200?text=Neues+Projekt";
+
+      if (!titel || !beschreibung) {
+        alert("Bitte fülle Titel und Beschreibung aus!");
+        return;
+      }
+
+      const neuesProjekt = {
+        titel,
+        beschreibung,
+        bauzeit: bauzeit || "Nicht angegeben",
+        schwier
