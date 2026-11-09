@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MakerHub – Community für Maker</title>
+  <style>
+    :root {
+      --primary: #3498db;
+      --secondary: #2c3e50;
+      --background: #121212;
+      --text: #e0e0e0;
+      --card-bg: #1e1e1e;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    header {
+      background-color: var(--primary);
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h1, h2, h3 {
+      color: var(--secondary);
+    }
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      border: 1px solid #333;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #444;
+      border-radius: 4px;
+      font-family: inherit;
+      background-color: #2d2d2d;
+      color: var(--text);
+    }
+    button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    #user-info {
+      background-color: #1e1e1e;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      text-align: right;
+    }
+    .project-card {
+      margin-bottom: 20px;
+    }
+    .project-images {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 10px 0;
+    }
+    .project-images img {
+      max-height: 200px;
+      max-width: 200px;
+      border-radius: 5px;
+      object-fit: cover;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🔧 MakerHub</h1>
+    <p>Tausche dich mit anderen Lehrkräften aus und teile deine Projekte!</p>
+  </header>
+  <div class="container">
+    <div id="user-info"></div>
+    <div class="card">
+      <h2>Anmelden</h2>
+      <div class="form-group">
+        <input type="email" id="login-email" placeholder="E-Mail (Demo: test@example.com)">
+      </div>
+      <div class="form-group">
+        <input type="password" id="login-password" placeholder="Passwort (Demo: 123456)">
+      </div>
+      <button onclick="alert('Login-Funktion würde hier mit PocketBase arbeiten.')">Anmelden</button>
+    </div>
+    <div class="card">
+      <h2>Registrieren</h2>
+      <div class="form-group">
+        <input type="email" id="register-email" placeholder="E-Mail">
+      </div>
+      <div class="form-group">
+        <input type="password" id="register-password" placeholder="Passwort">
+      </div>
+      <div class="form-group">
+        <input type="text" id="register-name" placeholder="Name">
+      </div>
+      <button onclick="alert('Registrierungs-Funktion würde hier mit PocketBase arbeiten.')">Registrieren</button>
+    </div>
+    <div class="card">
+      <h2>🌡️ Beispielprojekt: ESP32-Wetterstation</h2>
+      <p><strong>Beschreibung:</strong> Eine Wetterstation mit ESP32, die Temperatur, Luftfeuchtigkeit und Luftdruck misst. Die Daten werden auf einem OLED-Display angezeigt und können per WiFi an eine API gesendet werden.</p>
+      <p><strong>Materialien:</strong> ESP32, BME280-Sensor, OLED-Display, Breadboard, Jumper-Kabel</p>
+      <p><strong>Bauzeit:</strong> ~2 Stunden | <strong>Schwierigkeit:</strong> Mittel</p>
+      <div class="project-images">
+        
+
+![Generated Image](https://via.placeholder.com/200x200?text=ESP32+Wetterstation)
+
+
+      </div>
+      <button onclick="alert('Hier könnten Kommentare und Bewertungen angezeigt werden.')">Kommentare anzeigen</button>
+    </div>
+    <div class="card">
+      <h2>Neues Projekt erstellen</h2>
+      <div class="form-group">
+        <input type="text" id="project-title" placeholder="Titel">
+      </div>
+      <div class="form-group">
+        <textarea id="project-description" placeholder="Beschreibung" rows="4"></textarea>
+      </div>
+      <button onclick="alert('Projekt-Erstellungsfunktion würde hier mit PocketBase arbeiten.')">Projekt erstellen</button>
+    </div>
+  </div>
+</body>
+</html>
